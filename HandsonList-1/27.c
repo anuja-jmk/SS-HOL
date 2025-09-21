@@ -59,9 +59,9 @@ if(c1 == 0)
 
     {    
         waitpid(c2,&state,0);
-        printf("\nd)Executing ls -Rl using execvp\n");
+        printf("\nd)Executing ls -Rl using execv\n");
         char *argv[] = {"ls", "-Rl", NULL};
-        execvp("ls", argv); 
+        execv("/bin/ls", argv); 
     
     }
 
@@ -69,8 +69,9 @@ if(c1 == 0)
 else
 {
     waitpid(c1,&state,0);
-    printf("e)Executing ls -Rl using execlp\n");
-    execlp("ls", "ls", "-Rl", NULL);
+    printf("e)Executing ls -Rl using execvp\n");
+    char *argv[] = {"ls", "-Rl", NULL};
+    execvp("ls", argv); 
 
 }
 }
@@ -123,7 +124,7 @@ total 100
 -rw-rw-r-- 1 anuja anuja   273 Aug 22 16:21 test.c
 -rwxrwxr-x 1 anuja anuja 16224 Sep  6 12:24 writer
 
-d)Executing ls -Rl using execvp
+d)Executing ls -Rl using execv
 .:
 total 100
 -rw-rw-r-- 1 anuja anuja  1652 Sep  6 19:29 27.c
@@ -136,7 +137,7 @@ total 100
 -rw-rw-r-- 1 anuja anuja  3471 Aug 28 15:15 source.txt
 -rw-rw-r-- 1 anuja anuja   273 Aug 22 16:21 test.c
 -rwxrwxr-x 1 anuja anuja 16224 Sep  6 12:24 writer
-e)Executing ls -Rl using execlp
+e)Executing ls -Rl using execvp
 .:
 total 100
 -rw-rw-r-- 1 anuja anuja  1652 Sep  6 19:29 27.c
