@@ -1,0 +1,10 @@
+# Ignore C/C++ default compiled binary
+a.out
+
+# Ignore all shell scripts
+*.sh
+
+# Other build artifacts
+*.o
+*.out
+*.exe           # if you build for Windows or name .exe
