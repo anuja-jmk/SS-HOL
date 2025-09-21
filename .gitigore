@@ -7,4 +7,4 @@ a.out
 # Other build artifacts
 *.o
 *.out
-*.exe           # if you build for Windows or name .exe
+
