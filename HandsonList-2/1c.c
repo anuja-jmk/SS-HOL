@@ -11,14 +11,37 @@ Date: 23th Sep, 2025
 ==================================================================================================================================
 */
 
-#include<stdio.h>
-#include<unistd.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <sys/time.h>
 
+void timer_handler(int s) {
+    printf("ITIMER_PROF expired... Signal = %d\n", s);
+}
 
+int main() {
+    signal(SIGPROF, timer_handler);
+    struct itimerval t;
+    t.it_interval.tv_sec = 10;
+    t.it_interval.tv_usec = 10;
+    t.it_value.tv_sec = 10;
+    t.it_value.tv_usec = 10;
+
+    setitimer(ITIMER_PROF, &t, NULL);
+    while (1) {
+        for (volatile int k = 0; k < 1000000; k++);
+    }
+    return 0;
+}
 
 /*
 Output:
 
+anuja@anuja-Precision-5550:~/Documents/SS/SS-HOL/HandsonList-2$ ./a.out 
+ITIMER_PROF expired... Signal = 27
+ITIMER_PROF expired... Signal = 27
 
 */

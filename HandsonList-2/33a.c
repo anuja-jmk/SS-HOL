@@ -1,10 +1,8 @@
 /*
 ==================================================================================================================================
-Name: 34.c
+Name: 33.c
 Author: Anuja Jose
-Description: Write a program to create a concurrent server.
-a. use fork
-b. use pthread_create
+Description: Write a program to communicate between two machines using socket.
 Date: 30th Sep, 2025
 ==================================================================================================================================
 */
@@ -16,8 +14,8 @@ Date: 30th Sep, 2025
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT_NUM 23000
-#define BUF_L 1024
+#define SERVER_PORT 23000
+#define BUFFER_LEN 1024
 #define SERVER_IP "127.0.0.1"
 
 int create_client_socket() {
@@ -48,36 +46,24 @@ int main() {
     int sock_fd = create_client_socket();
     struct sockaddr_in server_addr;
 
-    connect_to_server(sock_fd, SERVER_IP, PORT_NUM, &server_addr);
+    connect_to_server(sock_fd, SERVER_IP, SERVER_PORT, &server_addr);
 
-    char *msg = "Hello from client!";
+    char *msg = "Hello Server...";
     send(sock_fd, msg, strlen(msg), 0);
     printf("Message sent to server: %s\n", msg);
 
-    char buffer[BUF_L] = {0};
-    read(sock_fd, buffer, BUF_L);
+    char buffer[BUFFER_LEN] = {0};
+    read(sock_fd, buffer, BUFFER_LEN);
     printf("Response from server: %s\n", buffer);
-    
-    sleep(10);
-    
+
     close(sock_fd);
     return 0;
 }
 
-
 /*
 Output:
-
-anuja@anuja-Precision-5550:~/Documents/SS/SS-HOL/HandsonList-2$ ./a.out 
-Server listening on port 23000...
-Thread 136279557666496 handling this client
-Message from client: Hello from client!
-Thread 136279557666496 handling this client
-Message from client: Hello from client!
-Thread 136279557666496 handling this client
-Message from client: Hello from client!
-
 anuja@anuja-Precision-5550:~/Documents/SS/SS-HOL/HandsonList-2$ ./clie 
-Message sent to server: Hello from client!
-Response from server: Hello from server (pthread)
+Message sent to server: Hello Server...
+Response from server: HI Client
+
 */
